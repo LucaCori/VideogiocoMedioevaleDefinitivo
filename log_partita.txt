@@ -1,0 +1,74 @@
+[2026-06-19 01:31:37] --- Avvio di una nuova sessione di gioco ---
+[2026-06-19 01:31:37] Saggio posizionato nella stanza: Prigioni Sotterranee
+[2026-06-19 01:31:37] Goblin posizionato nella stanza: Sala del Trono
+[2026-06-19 01:31:37] Corona posizionata randomicamente nella stanza: Cucina del Castello
+[2026-06-19 01:31:37] Talismano posizionato randomicamente nella stanza: Taverna del Drago Verde
+[2026-06-19 01:32:03] Incontro con Viandante
+[2026-06-19 01:32:11] Raccolto oggetto: Cesoie
+[2026-06-19 01:32:18] Spostamento a Nord in direzione della stanza: Sala del Trono
+[2026-06-19 01:32:18] Incontro con Goblin
+[2026-06-19 01:32:18] Giocatore ha subito le minacce del nemico Goblin
+[2026-06-19 01:32:18] Il nemico Goblin ha rubato Cesoie e lo ha nascosto in Armeria Reale.
+[2026-06-19 01:32:30] Spostamento a Sud in direzione della stanza: Cortile del Castello
+[2026-06-19 01:32:33] Spostamento a Sud in direzione della stanza: Taverna del Drago Verde
+[2026-06-19 01:32:40] Raccolto oggetto: Talismano
+[2026-06-19 01:32:46] Raccolto oggetto: Boccale
+[2026-06-19 01:33:00] Spostamento a Nord in direzione della stanza: Cortile del Castello
+[2026-06-19 01:33:03] Spostamento a Est in direzione della stanza: Armeria Reale
+[2026-06-19 01:33:12] Spostamento a Ovest in direzione della stanza: Cortile del Castello
+[2026-06-19 01:33:14] Spostamento a Sud in direzione della stanza: Taverna del Drago Verde
+[2026-06-19 01:33:16] Spostamento a Sud in direzione della stanza: Cucina del Castello
+[2026-06-19 01:33:27] Spostamento a Nord in direzione della stanza: Taverna del Drago Verde
+[2026-06-19 01:33:28] Spostamento a Nord in direzione della stanza: Cortile del Castello
+[2026-06-19 01:33:30] Spostamento a Nord in direzione della stanza: Sala del Trono
+[2026-06-19 01:33:30] Incontro con Goblin
+[2026-06-19 01:33:30] Giocatore ha subito le minacce del nemico Goblin
+[2026-06-19 01:33:30] Il nemico Goblin ha rubato Boccale e lo ha nascosto in Armeria Reale.
+[2026-06-19 01:35:59] --- Avvio di una nuova sessione di gioco ---
+[2026-06-19 01:35:59] Saggio posizionato nella stanza: Cucina del Castello
+[2026-06-19 01:35:59] Goblin posizionato nella stanza: Prigioni Sotterranee
+[2026-06-19 01:35:59] Corona posizionata randomicamente nella stanza: Armeria Reale
+[2026-06-19 01:35:59] Talismano posizionato randomicamente nella stanza: Taverna del Drago Verde
+[2026-06-19 01:36:10] Raccolto oggetto: Cesoie
+[2026-06-19 01:36:57] Spostamento a Nord in direzione della stanza: Sala del Trono
+[2026-06-19 01:37:03] Spostamento a Sud in direzione della stanza: Cortile del Castello
+[2026-06-19 01:37:05] Spostamento a Ovest in direzione della stanza: Prigioni Sotterranee
+[2026-06-19 01:37:05] Incontro con Goblin
+[2026-06-19 01:37:05] Giocatore ha subito le minacce del nemico Goblin
+[2026-06-19 01:37:05] Il nemico Goblin ha rubato Cesoie e lo ha nascosto in Armeria Reale.
+[2026-06-19 01:37:19] Spostamento a Est in direzione della stanza: Cortile del Castello
+[2026-06-19 01:37:19] Spostamento a Est in direzione della stanza: Armeria Reale
+[2026-06-19 01:37:26] Raccolto oggetto: Cesoie
+[2026-06-19 01:37:58] Raccolto oggetto: Corona
+[2026-06-19 01:38:04] Raccolto oggetto: Spada
+[2026-06-19 01:38:15] Spostamento a Ovest in direzione della stanza: Cortile del Castello
+[2026-06-19 01:38:17] Spostamento a Est in direzione della stanza: Armeria Reale
+[2026-06-19 01:38:24] Spostamento a Ovest in direzione della stanza: Cortile del Castello
+[2026-06-19 01:38:26] Spostamento a Ovest in direzione della stanza: Prigioni Sotterranee
+[2026-06-19 01:38:26] Incontro con Goblin
+[2026-06-19 01:38:26] Giocatore ha spaventato il nemico Goblin con la spada pronta in cima alla pila.
+[2026-06-19 01:38:31] Il giocatore si è difeso dall'attacco di Goblin usando la Spada.
+[2026-06-19 01:38:55] Spostamento a Est in direzione della stanza: Cortile del Castello
+[2026-06-19 01:39:04] Spostamento a Sud in direzione della stanza: Taverna del Drago Verde
+[2026-06-19 01:39:17] Spostamento a Sud in direzione della stanza: Cucina del Castello
+[2026-06-19 01:39:23] Incontro con Saggio
+[2026-06-19 01:39:23] Giocatore ha interagito positivamente con l'alleato Saggio
+[2026-06-19 01:39:30] Spostamento a Nord in direzione della stanza: Taverna del Drago Verde
+[2026-06-19 01:39:31] Spostamento a Nord in direzione della stanza: Cortile del Castello
+[2026-06-19 01:39:34] Spostamento a Nord in direzione della stanza: Sala del Trono
+[2026-06-19 01:39:40] Posato oggetto: Spada nella stanza Sala del Trono
+[2026-06-19 01:39:45] Usato oggetto: Corona nella Sala del Trono.
+[2026-06-19 01:39:45] Partita terminata con la vittoria del giocatore.
+[2026-06-19 01:39:52] --- Avvio di una nuova sessione di gioco ---
+[2026-06-19 01:39:52] Saggio posizionato nella stanza: Sala del Trono
+[2026-06-19 01:39:52] Goblin posizionato nella stanza: Armeria Reale
+[2026-06-19 01:39:52] Corona posizionata randomicamente nella stanza: Armeria Reale
+[2026-06-19 01:39:52] Talismano posizionato randomicamente nella stanza: Taverna del Drago Verde
+[2026-06-19 01:40:02] Raccolto oggetto: Cesoie
+[2026-06-19 01:40:04] Spostamento a Est in direzione della stanza: Armeria Reale
+[2026-06-19 01:40:04] Incontro con Goblin
+[2026-06-19 01:40:04] Giocatore ha subito le minacce del nemico Goblin
+[2026-06-19 01:40:04] Il nemico Goblin ha rubato Cesoie e lo ha nascosto in Prigioni Sotterranee.
+[2026-06-19 01:40:13] Raccolto oggetto: Corona
+[2026-06-19 01:40:18] Raccolto oggetto: Spada
+[2026-06-19 01:40:21] Partita salvata manualmente con inventario e stato esplorazione.

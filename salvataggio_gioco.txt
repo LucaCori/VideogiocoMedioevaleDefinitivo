@@ -1,0 +1,5 @@
+Diego
+Armeria Reale
+Interazione con Personaggio Buono: False
+Stanze Visitate: Cortile del Castello,Armeria Reale
+Oggetti Inventario: Corona,Spada
