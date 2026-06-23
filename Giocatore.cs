@@ -60,7 +60,7 @@ namespace Program
         }
 
         /// <summary>
-        /// REQUISITO OVERLOADING: Versione 2 dello stesso metodo Muovi, ma accetta un oggett Stanza.
+        /// REQUISITO OVERLOADING: Versione 2 dello stesso metodo Muovi, ma accetta un oggetto Stanza.
         /// </summary>
         public void Muovi(Stanza nuovaStanza)
         {
@@ -106,19 +106,26 @@ namespace Program
             Logger.ScriviLog($"Raccolto oggetto: {objDaRaccogliere.Nome}");
         }
 
-        //REQUISITO LIFO: "potrà prelevare e usare direttamente solo l'ultimo oggetto acquisito,
-        // ma ovviamente potrà togliere momentaneamente oggetti fino a quello desiderato, usarlo e re-inserirli tutti"
+        /// <summary>
+        /// Gestisce l'interazione con gli oggetti dell'inventario secondo una logica LIFO (Last-In, First-Out).
+        /// Permette di posare l'oggetto nella stanza corrente o di usarlo attivando vincoli contestuali.
+        /// </summary>
         public void UsaOPosaOggetto(string nomeOggetto, bool posaNellaStanza)
         {
+            // 1. GESTIONE DELLE ECCEZIONI / EDGE CASES
+            // Controllo difensivo: se l'inventario è vuoto, l'azione non è computabile.
             if(InventarioPila.Count == 0)
             {
                 Console.WriteLine("\n[!] Inventario vuoto!");
-                return;
+                return; // Early return per evitare computazioni inutili o eccezioni a runtime
             }
 
-            // REQUISITO LIFO RIGIDO: Controlliamo SUBITO se l'oggetto in cima è quello richiesto
+            // 2. VERIFICA DEL REQUISITO LIFO (Last-In, First-Out)
+            // Utilizziamo il metodo .Peek() che restituisce l'elemento in cima alla pila SENZA rimuoverlo.
+            // Questo garantisce un accesso in tempo costante O(1) per la verifica del vincolo.
             Oggetto oggettoInCima = InventarioPila.Peek();
 
+            // Confronto case-insensitive del nome dell'oggetto per migliorare la UX (User Experience)
             if(!oggettoInCima.Nome.Equals(nomeOggetto, StringComparison.OrdinalIgnoreCase))
             {
                 // Se l'oggetto cercato non è in cima, stampiamo l'errore e blocchiamo l'azione
@@ -130,49 +137,55 @@ namespace Program
             // Se arriviamo qui, l'oggetto richiesto è EFFETTIVAMENTE in cima alla pila!
             // Lo estraiamo ufficialmente (senza bisogno di cicli while complessi)
             Oggetto oggettoTrovato = InventarioPila.Pop();
+
+            // Allocazione di una struttura di supporto (Pila Temporanea) per gestire la persistenza
+            // degli oggetti non consumabili, preservandone l'ordine originale di inserimento.
             Stack<Oggetto> pilaTemporanea = new Stack<Oggetto>();
 
             if(oggettoTrovato != null)
             {
-                //CASO 1: Il giocatore vuole POSARE l'oggetto
+                //CASO 1: LOGICA DI RILASCIO (POSA NELLA STANZA)
                 if (posaNellaStanza)
                 {
-                    // Lo lasciamo nella stanza corrente ed esce definitivamente dall'inventario
+                    // L'oggetto esce permanentemente dall'inventario e viene inserito 
+                    // nella collezione degli oggetti della stanza corrente (Relazione di aggregazione)
                     StanzaCorrente.OggettiPresenti.Add(oggettoTrovato);
                     Console.WriteLine($"\nHai posato: {oggettoTrovato.Nome}.");
                     Logger.ScriviLog($"Posato oggetto: {oggettoTrovato.Nome} nella stanza {StanzaCorrente.Nome}");
                 }
-                //CASO 2: Il giocatore vuole USARE l'oggetto
+                //CASO 2: LOGICA DI UTILIZZO CONDIZIONALE (BUSINESS LOGIC DEL GIOCO)
                 else
                 {
                     //--- VINCOLO SPADA ---
                     if(oggettoTrovato.Nome.Equals("Spada", StringComparison.OrdinalIgnoreCase))
                     {
+                        // Pattern Matching / Type Checking: verifichiamo polimorficamente se il personaggio è di tipo 'Nemico'
                         if(StanzaCorrente.PersonaggioPresente is Nemico)
                         {
                             Console.WriteLine($"\nHai utilizzato l'oggetto: {oggettoTrovato.Nome} per difenderti!");
                             Logger.ScriviLog($"Usato oggetto: {oggettoTrovato.Nome} contro il nemico.");
-                            pilaTemporanea.Push(oggettoTrovato); // La spada si salva, torna in inventario
+                            pilaTemporanea.Push(oggettoTrovato); // Oggetto non consumabile: viene parcheggiato per il reinserimento
                         }
                         else
                         {
                             Console.WriteLine($"\n[!] Non puoi usare la SPADA qui. Non c'è nessun nemico da cui difendersi in questa stanza!");
-                            pilaTemporanea.Push(oggettoTrovato); // Torna in inventario
+                            pilaTemporanea.Push(oggettoTrovato); // Rifiuto d'uso: l'oggetto torna comunque in inventario
                         }
                     }
                     //--- VINCOLO CORONA ---
                     else if(oggettoTrovato.Nome.Equals("Corona", StringComparison.OrdinalIgnoreCase))
                     {
+                        // Controllo spaziale: l'oggetto Corona è vincolato a un ID/Nome di stanza specifico (Trigger di Vittoria)
                         if(StanzaCorrente.Nome.Equals("Sala del Trono", StringComparison.OrdinalIgnoreCase))
                         {
                             Console.WriteLine($"\nHai utilizzato l'oggetto: {oggettoTrovato.Nome}!");
                             Logger.ScriviLog($"Usato oggetto: {oggettoTrovato.Nome} nella Sala del Trono.");
-                            StanzaCorrente.OggettiPresenti.Add(oggettoTrovato); // Viene consumata sul trono per attivare la vittoria nel Main
+                            StanzaCorrente.OggettiPresenti.Add(oggettoTrovato); // Oggetto CONSUMATO: si deposita nell'ambiente
                         }
                         else
                         {
                             Console.WriteLine($"\n[!] Non puoi usare la CORONA qui! Questo oggetto può essere utilizzato solo ed esclusivamente all'interno della Sala del Trono.");
-                            pilaTemporanea.Push(oggettoTrovato); // Torna in inventario
+                            pilaTemporanea.Push(oggettoTrovato); // Rifiuto d'uso: torna in inventario
                         }
                     }
                     //--- VINCOLO TALISMANO ---
@@ -181,34 +194,37 @@ namespace Program
                         Console.WriteLine("\n[!] Stringi il Talismano... l'aria attorno a te inizia a fessurarsi di crepe violacee!");
                         Console.WriteLine("Vieni risucchiato in un vortice magico!");
 
-                        // REINSERIMENTO ANTICIPATO: Il talismano deve tornare in cima prima del teletrasporto
+                        // GESTIONE DELLO STATO ANTECEDENTE AL TELETRASPORTO
+                        // Il talismano deve tornare in inventario prima del salto per evitare incoerenze di stato
                         pilaTemporanea.Push(oggettoTrovato);
                         while(pilaTemporanea.Count > 0)
                         {
                             InventarioPila.Push(pilaTemporanea.Pop());
                         }
 
-                        // Resettiamo lo stato di tutti i nemici prima del salto magico
+                        // Reset dello stato dei Nemici nel grafo globale delle stanze (Iterazione su collezione globale)
                         foreach (var stanza in Program.tutteLeStanze)
                         {
                             if (stanza.PersonaggioPresente is Nemico n) n.GiaAffrontato = false;
                         }
 
-                        // Scegliamo una stanza casuale e viaggiamo
+                        // Generazione di un indice pseudo-casuale per determinare la stanza di destinazione
                         int indiceCasuale = Program.random.Next(Program.tutteLeStanze.Count);
                         Stanza stanzaDestinazione = Program.tutteLeStanze[indiceCasuale];
 
+                        // Invocazione dell'overloading del metodo Muovi(Stanza) per il teletrasporto diretto
                         this.Muovi(stanzaDestinazione);
                         Console.WriteLine($"Ti risvegli confuso, materializzato in: {StanzaCorrente.Nome}!");
 
-                        // CONTROLLO NEMICO IMMEDIATO
+                        // LOGICA DI AGGRESSIONE IMMEDIATA POST-TELETRASPORTO
                         if(StanzaCorrente.PersonaggioPresente != null && StanzaCorrente.PersonaggioPresente is Nemico nemico)
                         {
-                            nemico.Interagisci(this);
+                            nemico.Interagisci(this); // Interazione polimorfica
                             if (!nemico.GiaAffrontato)
                             {
                                 if(InventarioPila.Count > 0)
                                 {
+                                    // Controllo speculativo sulla nuova cima dell'inventario dopo il teletrasporto
                                     bool haSpadaInCima = InventarioPila.Peek().Nome.Equals("Spada", StringComparison.OrdinalIgnoreCase);
                                     bool attaccoAnnullato = false;
 
@@ -225,11 +241,13 @@ namespace Program
                                         }
                                     }
 
+                                    // RISOLUZIONE DEL FURTO (Se il giocatore non ha o non usa la spada in cima)
                                     if (!attaccoAnnullato)
                                     {
                                         Oggetto oggettoRubato = InventarioPila.Pop();
                                         Console.WriteLine($"\n[!] {nemico.Nome} ti ha sorpreso alle spalle e ti ha rubato l'oggetto in cima all'inventario: {oggettoRubato.Nome}!");
 
+                                        // Algoritmo di redistribuzione dell'oggetto rubato in una stanza casuale del grafo (esclusa quella corrente)
                                         List<Stanza> stanzeDisponibiliPerFurto = Program.tutteLeStanze.FindAll(s => s != StanzaCorrente);
                                         Stanza stanzaDestinazioneOggetto = stanzeDisponibiliPerFurto[Program.random.Next(stanzeDisponibiliPerFurto.Count)];
                                         stanzaDestinazioneOggetto.OggettiPresenti.Add(oggettoRubato);
@@ -239,7 +257,7 @@ namespace Program
                                 {
                                     Console.WriteLine($"\n[{nemico.Nome} ti fruga nelle tasche]: 'Non hai niente da rubare, straccione!'");
                                 }
-                                nemico.GiaAffrontato = true;
+                                nemico.GiaAffrontato = true; // Mutazione dello stato del nemico per evitare loop di aggressione
                             }
                         }
                         return; // Uscita sicura: la pila temporanea è già stata svuotata sopra
@@ -249,12 +267,15 @@ namespace Program
                     {
                         Console.WriteLine($"\nHai utilizzato l'oggetto: {oggettoTrovato.Nome}!");
                         Logger.ScriviLog($"Usato oggetto: {oggettoTrovato.Nome}");
-                        pilaTemporanea.Push(oggettoTrovato); // Rimane nell'inventario
+                        pilaTemporanea.Push(oggettoTrovato); // L'oggetto non si consuma, viene parcheggiato, rimane nell'inventario
                     }
                 }
             }
 
-            // REQUISITO LIFO: Rimettiamo a posto gli oggetti se rimasti in pilaTemporanea (es: Spada o altri oggetti generali)
+            // 4. RIPRISTINO DELLO STATO DELL'INVENTARIO (Logica di Rollback)
+            // Svuotiamo la pila temporanea riversando gli oggetti non consumati (es. Spada o Oggetti Generici) 
+            // nuovamente dentro l'inventario principale. Essendo entrambe strutture Stack (LIFO), l'operazione
+            // combinata di Pop e Push mantiene inalterato l'ordine originario dei restanti elementi.
             while(pilaTemporanea.Count > 0)
             {
                 InventarioPila.Push(pilaTemporanea.Pop());
